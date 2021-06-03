@@ -41,7 +41,7 @@ const CheckAuth=(req,res,next)=>{
 }
 
 //connecting to database
-const dbURI="mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/INVOICE?retryWrites=true&w=majority";
+const dbURI="mongodb+srv://Pratusha:Pratusha1998@cluster0.38wpw.mongodb.net/INVOICE?retryWrites=true&w=majority";
 mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true})
 .then(()=>{
     console.log("invoice database connected")
