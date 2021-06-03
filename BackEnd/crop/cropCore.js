@@ -16,7 +16,6 @@ exports.crop_get_all=(req,res)=>{
         }
         else{
             res.send(data);
-            console.log(data);
         }
     })
 }
@@ -27,7 +26,6 @@ exports.crop_get_by_id=(req,res)=>{
         }
         else{
             res.send(data);
-            console.log(data);
         }
     })
 }
@@ -40,6 +38,7 @@ exports.upload_crop=(req,res)=>{
                 crop_name:req.body.crop_name,
                 crop_type:req.body.crop_type,
                 crop_quantity:req.body.crop_quantity,
+                crop_price:req.body.crop_price,
                 location:{
                     Addressline1:req.body.location.Addressline1,
                     Addressline2:req.body.location.Addressline2,
@@ -69,12 +68,12 @@ exports.upload_crop=(req,res)=>{
     })  
 }
 exports.edit_by_id=(req,res)=>{
-    console.log(req.body);
     cropschema.findOneAndUpdate({crop_name:req.params.id},{$set:
         {
             crop_name:req.body.crop_name,
             crop_type:req.body.crop_type,
             crop_quantity:req.body.crop_quantity,
+            crop_price:req.body.crop_price,
             location:{
                 Addressline1:req.body.location.Addressline1,
                 Addressline2:req.body.location.Addressline2,

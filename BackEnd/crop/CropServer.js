@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(morgan("dev"));
 
 //connecting to database
-const dbURI="mongodb+srv://Pratusha:Pratusha1998@cluster0.38wpw.mongodb.net/CROP?retryWrites=true&w=majority";
+const dbURI="mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/CROP?retryWrites=true&w=majority";
 mongoose.connect(dbURI,{useNewUrlParser:true,
     useUnifiedTopology:true,
     useCreateIndex:true,

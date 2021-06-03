@@ -1,9 +1,9 @@
 {
   "name": "crop",
   "version": "1.0.0",
-  "description": "",
   "main": "CropSchema.js",
   "dependencies": {
+    "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -19,5 +19,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": ""
 }

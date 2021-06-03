@@ -7,6 +7,9 @@ const cors=require("cors");
 const morgan=require("morgan");
 const jwt=require("jsonwebtoken")
 const app=express();
+const axios=require("axios")
+
+//axios.get()
 
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
@@ -24,12 +27,10 @@ app.use((req,res,next)=>{
     next();
 })
 
-
-
 //authenticate check in middleware
 const CheckAuth=(req,res,next)=>{
     try{
-    const decoded=jwt.verify(req.body.token,"pratusha");
+    const decoded=jwt.verify(req.body.token,"chaithra");
     req.userdata=decoded;
     next();
     } catch(error){
@@ -40,25 +41,45 @@ const CheckAuth=(req,res,next)=>{
 }
 
 //connecting to database
-const dbURI="mongodb+srv://Pratusha:Pratusha1998@cluster0.38wpw.mongodb.net/INVOICE?retryWrites=true&w=majority";
+const dbURI="mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/INVOICE?retryWrites=true&w=majority";
 mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true})
 .then(()=>{
-    console.log("admin database connected")
+    console.log("invoice database connected")
 })
 .catch((err)=>{
     console.log("db connection error:" + err);
 });
 const invoice=require("./InvoiceSchema");
 let list=[]
-//preparing card
+
+//preparing cart
 app.post("/cart",(req,res,next)=>{
-    list.push(req.body)
-    //list.append(req.body);
+    list.push(req.body);
     console.log(req.body);
     console.log(list);
     res.json(list)
 })
 
+//get all items
+app.get("/cartitems",(req,res,next)=>{
+    res.status(200).json(list);
+})
+
+//delete particualr element
+app.get("/deleteitem/:id",(req,res)=>{
+    crop_name=req.params.id;   
+    var removeindex=list.map((item)=>{return item.crop_name}).indexOf(crop_name)
+    list.splice(removeindex,1)
+    res.status(200).json(list)
+})
+
+//delete all items in cart
+app.get("/deleteitems",(req,res)=>{
+    list=[];
+    res.status(200).json(list)
+})
+
+//generte invoice
 app.post('/generate',(req,res,next)=>{
     const createinvoice=new invoice({
         _id:new mongoose.Types.ObjectId(),
@@ -84,6 +105,7 @@ app.post('/generate',(req,res,next)=>{
     console.log(req.body);
 })
 
+//edit generated invoice
 app.put('/edit/:id',CheckAuth,(req,res,next)=>{
     invoice.findOneAndUpdate({crop_name:req.params.id},{$set:
         {
