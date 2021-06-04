@@ -13,7 +13,6 @@ exports.farmers_get_all=(req,res)=>{
         }
         else{
             res.send(data);
-           // console.log(data);
         }
     })
 }
@@ -25,7 +24,6 @@ exports.farmers_get_by_id=(req,res)=>{
         }
         else{
             res.send(data);
-            //console.log(data);
         }
     })
 }
@@ -49,12 +47,9 @@ exports.farmers_register=(req,res)=>{
                         _id:new mongoose.Types.ObjectId(),
                         name:req.body.name,
                         email:req.body.email,
+                        contact:req.body.contact,
+                        gender:req.body.gender,
                         password:hash,
-                        // bank_details:{
-                        //     bank_name:req.body.bank_details.bank_name,
-                        //     account_number:req.body.bank_details.account_number,
-                        //     ifsc_code:req.body.bank_details.ifsc_code
-                        // }
                     });
                      farmer.save()
                     .then(result=>{
@@ -129,6 +124,7 @@ exports.farmers_delete_by_id=(req,res)=>{
 }
 
 exports.farmers_edit_by_id=(req,res)=>{
+    console.log(req.body);
     farmerschema.find({email:req.body.email}).exec()
     .then(farmer=>{
         if(farmer.length<1){
@@ -153,14 +149,14 @@ exports.farmers_edit_by_id=(req,res)=>{
                     {
                         name:req.body.name,
                         email:req.body.email,
-                        password:req.body.password,
-                        description:req.body.description,
+                        contact:req.body.contact,
+                        cropsgrown:req.body.cropsgrown,
+                        gender:req.body.gender,
                         bank_details:{
                             bank_name:req.body.bank_details.bank_name,
                             account_number:req.body.bank_details.account_number,
                             ifsc_code:req.body.bank_details.ifsc_code
                         }
-                       
                     }
                 }) .then(result=>{
                     res.status(201).json({
@@ -176,9 +172,6 @@ exports.farmers_edit_by_id=(req,res)=>{
                     })
                 })
             }
-            res.status(401).json({
-                message:"Authentication failed"
-            })
         })
     }).catch(err=>{
         console.log(err);

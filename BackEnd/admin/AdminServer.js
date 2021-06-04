@@ -17,7 +17,7 @@ const cropurl="http://localhost:8000/"
 const app=express();
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
-//app.use(morgan("dev"));
+app.use(morgan("dev"));
 
 //for browsers only
 app.use((req,res,next)=>{
@@ -35,7 +35,6 @@ app.use((req,res,next)=>{
 const CheckAuth=(req,res,next)=>{
     try{
         const token =req.headers.authorization.split(" ")[1];
-        console.log(token);
     const decoded=jwt.verify(token,secretKey);
     req.userdata=decoded;
     next();
@@ -55,6 +54,9 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
 .catch((err)=>{
     console.log("db connection error:" + err);
 });
+
+//get all details
+app.get("/admin",CheckAuth,core.get_admins);
 
 // login dealer user
 app.post("/login",core.admin_login);
