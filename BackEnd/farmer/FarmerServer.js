@@ -73,20 +73,104 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
 });
 
 // Api Endpoints
+
+/**
+ * @swagger
+ * /farmer:
+ * get:
+ * discription: Get farmers_get_all
+ * responses:
+ * 200:
+ * description:Success
+ */
 //getting all data
 app.get("/farmers",CheckAuth,code.farmers_get_all)
+
+/**
+ * @swagger
+ * /farmers:
+ * get:
+ * discription: farmers_get_by_id
+ * parameters:
+ * -name:String
+ * email:String
+ * password:String
+ * responses:
+ * 200:
+ * description:Success
+ */
 
 // fetch particular farmer details with name
 app.get('/farmers/:id',CheckAuth,code.farmers_get_by_id);
 
+/**
+ * @swagger
+ * /farmers:
+ * post:
+ * discription: farmers_login
+ * parameters:
+ * -name:String
+ * email:String
+ * password:String
+ * responses:
+ * 200:
+ * description:Success
+ */
+
 // login dealer user
 app.post("/login",code.farmers_login);
+
+/**
+ * @swagger
+ * /farmers:
+ * post:
+ * discription: farmers_register
+ * parameters:
+ * -name:String
+ * email:String
+ * password:String
+ * contact:Number
+ *  gender:String
+ *  cropsgrown:Array
+ * bank_details:bank
+ * responses:
+ * 200:
+ * description:Success
+ */
 
 //registering new farmer details
 app.post("/register",code.farmers_register)  
 
+/**
+ * @swagger
+ * /farmers:
+ * put:
+ * discription: farmers_get_by_id
+ * parameters:
+ * -name:String
+ * email:String
+ * password:String
+ * responses:
+ * 200:
+ * description:Success
+ */
+
 //updating a particular crop
 app.put("/farmers/:id",CheckAuth,code.farmers_edit_by_id)
+
+/**
+ * @swagger
+ * /farmers:
+ * delete:
+ * discription: farmers_get_by_id
+ * parameters:
+ * -name:String
+ * email:String
+ * password:String
+ * responses:
+ * 200:
+ * description:Success
+ */
 
 //deleteing particular crop
 app.delete('/farmers/:id',CheckAuth,code.farmers_delete_by_id)
