@@ -57,20 +57,98 @@ const { secretKey } = require("./config");
 
 // Api methods
 
+/**
+ * @swagger
+ * /dealer:
+ * get:
+ * discription: Get dealers_get_all
+ * responses:
+ * 200:
+ * description:Success
+ */
+
 //getting all delaer data
 app.get("/dealers",CheckAuth,code.dealers_get_all)
+
+/**
+ * @swagger
+ * /dealer:
+ * get:
+ * discription: Get dealers_get_id
+ * responses:
+ * 200:
+ * description:Success
+ */
 
 // fetch particular dealer details with name
 app.get('/dealers/:id',CheckAuth,code.dealers_get_by_id)
 
+/**
+ * @swagger
+ * /dealer:
+ * post:
+ * discription: dealers_register
+ * parameters:
+ * -name:String
+ * email:String
+ * password:String
+ * subscribed_crops:crop
+ * bank_details:bank
+ * responses:
+ * 200:
+ * description:Success
+ */
+
 //register new dealer
 app.post("/register",code.dealers_register) 
+
+/**
+ * @swagger
+ * /dealer:
+ * post:
+ * discription: dealers_login
+ * parameters:
+ * -name:String
+ * email:String
+ * password:String
+ * responses:
+ * 200:
+ * description:Success
+ */
     
 // login to existing dealer user
 app.post("/login",code.dealers_login)
 
+/**
+ * @swagger
+ * /dealers:
+ * put:
+ * discription: dealers_edit_by_id
+ * parameters:
+ * -name:String
+ * email:String
+ * password:String
+ * responses:
+ * 200:
+ * description:Success
+ */
+
 //editing a particular dealer details
 app.put("/dealers/:id",CheckAuth,code.dealers_edit_by_id)
+
+/**
+ * @swagger
+ * /dealers:
+ * delete:
+ * discription: dealers_delete_by_id
+ * parameters:
+ * -name:String
+ * email:String
+ * password:String
+ * responses:
+ * 200:
+ * description:Success
+ */
 
 //deleteing particular dealer
 app.delete('/dealers/:id',CheckAuth,code.dealers_delete_by_id)
