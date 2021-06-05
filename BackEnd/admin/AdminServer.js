@@ -31,6 +31,8 @@ app.use((req,res,next)=>{
     next();
 })
 
+
+
 //checking Authorization in middleware
 const CheckAuth=(req,res,next)=>{
     try{
@@ -69,6 +71,7 @@ app.put("/:id",CheckAuth,core.admin_edit_by_id);
 
 //delete admin details
 app.delete("/:id",CheckAuth,core.admin_delete_by_id)
+
 
 //handing server errors
 app.use((req,res,next)=>{
