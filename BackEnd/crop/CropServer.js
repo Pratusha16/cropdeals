@@ -86,17 +86,69 @@ const upload=multer({storage:Storage,limits:{
 
 // Api methods
 
+/**
+ * @swagger
+ * /crop:
+ * get:
+ * discription: Get crop_get_all
+ * responses:
+ * 200:
+ * description:Success
+ */
+
 //getting all data
 app.get("/",core.crop_get_all)
+
+/**
+ * @swagger
+ * /crop:
+ * get:
+ * discription: Get crop_get_id
+ * responses:
+ * 200:
+ * description:Success
+ */
 
 // fetch particular crop details with name
 app.get('/:id',core.crop_get_by_id)
 
+/**
+ * @swagger
+ * /crop:
+ * get:
+ * discription: upload_crop
+ * responses:
+ * 200:
+ * description:Success
+ */
+
 //adding crop
 //app.post("/",upload.single("crop_img"),CheckAuth,core.upload_crop)
  app.post("/",CheckAuth,core.upload_crop)   
+
+ /**
+ * @swagger
+ * /crop:
+ * get:
+ * discription: Get crop.edit_by_id
+ * responses:
+ * 200:
+ * description:Success
+ */
+
+
 //updating a particular crop
 app.put("/:id",CheckAuth,core.edit_by_id)
+
+/**
+ * @swagger
+ * /crop:
+ * get:
+ * discription: edit_by_id
+ * responses:
+ * 200:
+ * description:Success
+ */
 
 //deleteing particular crop
 app.delete('/:id',CheckAuth,core.delete_by_id)

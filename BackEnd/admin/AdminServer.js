@@ -30,9 +30,6 @@ app.use((req,res,next)=>{
     }
     next();
 })
-
-
-
 //checking Authorization in middleware
 const CheckAuth=(req,res,next)=>{
     try{
@@ -57,21 +54,89 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
     console.log("db connection error:" + err);
 });
 
+
+/**
+ * @swagger
+ * /admin:
+ * get:
+ * discription: Get admin check_auth
+ * responses:
+ * 200:
+ * description:Success
+ */
 //get all details
 app.get("/admin",CheckAuth,core.get_admins);
+
+/**
+ * @swagger
+ * /admin:
+ * post:
+ * discription: admin_login
+ * parameters:
+ * -name:String
+ * email:String
+ * password:String
+ * responses:
+ * 200:
+ * description:Success
+ */
 
 // login dealer user
 app.post("/login",core.admin_login);
 
+/**
+ * @swagger
+ * /admin:
+ * post:
+ * discription:  admin_registration
+ * parameters:
+ * -name:String
+ * email:String
+ * password:String
+ * contact:number
+ * gender:String
+ * responses:
+ * 200:
+ * description:Success
+ */
+
 //register new dealer
 app.post('/register',core.admin_register);
+
+/**
+ * @swagger
+ * /admin:
+ * post:
+ * discription: admin_edit
+ * parameters:
+ * -name:String
+ * email:String
+ * password:String
+ * responses:
+ * 200:
+ * description:Success
+ */
 
 //edit admin deatils
 app.put("/:id",CheckAuth,core.admin_edit_by_id);
 
+/**
+ * @swagger
+ * /admin:
+ * post:
+ * discription: admin_delete
+ * parameters:
+ * -name:String
+ * email:String
+ * password:String
+ * responses:
+ * 200:
+ * description:Success
+ */
+
+
 //delete admin details
 app.delete("/:id",CheckAuth,core.admin_delete_by_id)
-
 
 //handing server errors
 app.use((req,res,next)=>{
