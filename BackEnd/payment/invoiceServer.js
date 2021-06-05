@@ -52,6 +52,16 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
 const invoice=require("./InvoiceSchema");
 let list=[]
 
+/**
+ * @swagger
+ * /invoice:
+ * post:
+ * discription: cart
+ * responses:
+ * 200:
+ * description:Success
+ */
+
 //preparing cart
 app.post("/cart",(req,res,next)=>{
     list.push(req.body);
@@ -60,10 +70,31 @@ app.post("/cart",(req,res,next)=>{
     res.json(list)
 })
 
+/**
+ * @swagger
+ * /invoice:
+ * get:
+ * discription: cartitems
+ * responses:
+ * 200:
+ * description:Success
+ */
+
 //get all items
 app.get("/cartitems",(req,res,next)=>{
     res.status(200).json(list);
 })
+
+
+/**
+ * @swagger
+ * /invoice:
+ * get:
+ * discription: deleteitems_by_id
+ * responses:
+ * 200:
+ * description:Success
+ */
 
 //delete particualr element
 app.get("/deleteitem/:id",(req,res)=>{
@@ -78,6 +109,16 @@ app.get("/deleteitems",(req,res)=>{
     list=[];
     res.status(200).json(list)
 })
+
+/**
+ * @swagger
+ * /invoice:
+ * post:
+ * discription: cart_generate
+ * responses:
+ * 200:
+ * description:Success
+ */
 
 //generte invoice
 app.post('/generate',(req,res,next)=>{
@@ -104,6 +145,17 @@ app.post('/generate',(req,res,next)=>{
     })
     console.log(req.body);
 })
+
+
+/**
+ * @swagger
+ * /invoice:
+ * put:
+ * discription: cart_edit_by_id
+ * responses:
+ * 200:
+ * description:Success
+ */
 
 //edit generated invoice
 app.put('/edit/:id',CheckAuth,(req,res,next)=>{
