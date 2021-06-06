@@ -17,6 +17,36 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 
+const swaggerJsdoc=require("swagger-jsdoc");
+const swaggerUi=require("swagger-ui-express");
+//swagger 
+const options = {
+    definition: {
+      openapi: "3.0.0",
+      info: {
+        title: "CROP DEAL CASE STUDY Crop API with Swagger",
+        version: "0.1.0",
+        description:
+          "This is a simple CRUD API application made with Express and documented with Swagger",
+      },
+      servers: [
+        {
+          url: "http://localhost:8000",
+        },
+      ],
+    },
+    apis: ["CropServer.js"],
+  };
+ //require("../../BackEnd/crop/CropServer")
+  const specs = swaggerJsdoc(options);
+  app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(specs,{ explorer: true })
+  );
+
+  console.log(specs);
+
 //connecting to database
 const dbURI="mongodb+srv://Pratusha:Pratusha1998@cluster0.38wpw.mongodb.net/CROP?retryWrites=true&w=majority";
 mongoose.connect(dbURI,{useNewUrlParser:true,
@@ -44,6 +74,54 @@ app.use((req,res,next)=>{
     }
     next();
 })
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *      Crop:
+ *       type: object
+ *       required:
+ *         - crop_name
+ *         - crop_type
+ *         - crop_quantity
+ *         - crop_price
+ *         - location
+ *         - crop_img
+ *         - uploaded_by
+ *       properties:
+ *         crop_type:
+ *           type: string
+ *           description: The crop type
+ *         crop_name:
+ *           type: string
+ *           description: The crop name
+ *         crop_quamtity:
+ *           type: number
+ *           description: quantity
+ *         crop_price:
+ *           type: number
+ *           description: crop price
+ *         location:
+ *           type: string
+ *           description: farmer location
+ *         crop_image:
+ *           type: string
+ *           description: crop image
+ *         uploaded_by:
+ *           type: string
+ *           description: farmer name
+ *
+ *       example:
+ *         - crop_name:"onion"
+ *         - crop_type:"vegetable"
+ *         - crop_quantity:100
+ *         - crop_price:20
+ *         - location:object
+ *         - crop_img:"http://image"
+ *         - uploaded_by :"pradeep"                     
+ */
+
 
 //checking Authorization in middleware
 CheckAuth=(req,res,next)=>{
@@ -89,12 +167,27 @@ const upload=multer({storage:Storage,limits:{
 /**
  * @swagger
  * /crop:
- * get:
- * discription: Get crop_get_all
- * responses:
- * 200:
- * description:Success
+ *   get:
+ *    discription: Get all crops
+ *    parameters:
+ *      - crop_name: 
+ *        description: name
+ *        required: true
+ *        type: String
+ *    responses:
+ *      '200':
+ *       description:Success
+ *   /ping:
+ *     get:
+ *       summary: Checks if the server is running
+ *       security: []   # No security
+ *       responses:
+ *         '200':
+ *           description: Server is up and running
+ *         default:
+ *           description: Something is wrong
  */
+
 
 //getting all data
 app.get("/",core.crop_get_all)
@@ -102,11 +195,25 @@ app.get("/",core.crop_get_all)
 /**
  * @swagger
  * /crop:
- * get:
- * discription: Get crop_get_id
- * responses:
- * 200:
- * description:Success
+ *   get:
+ *    discription: Get crop by id
+ *    parameters:
+ *      - crop_name: 
+ *        description: name
+ *        required: true
+ *        type: String
+ *    responses:
+ *      '200':
+ *       description:Success
+ *   /ping:
+ *     get:
+ *       summary: Checks if the server is running
+ *       security: []   # No security
+ *       responses:
+ *         '200':
+ *           description: Server is up and running
+ *         default:
+ *           description: Something is wrong
  */
 
 // fetch particular crop details with name
@@ -115,11 +222,24 @@ app.get('/:id',core.crop_get_by_id)
 /**
  * @swagger
  * /crop:
- * get:
- * discription: upload_crop
- * responses:
- * 200:
- * description:Success
+ *   post:
+ *     summary: upload crop
+ *     tags: [Product]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Crop'
+ *     responses:
+ *       200:
+ *         description: crop are uploaded successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Crop'
+ *       500:
+ *         description: Some server error
  */
 
 //adding crop
@@ -129,26 +249,53 @@ app.get('/:id',core.crop_get_by_id)
  /**
  * @swagger
  * /crop:
- * get:
- * discription: Get crop.edit_by_id
- * responses:
- * 200:
- * description:Success
+ *   put:
+ *     summary: update crops
+ *     tags: [Product]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Crop'
+ *     responses:
+ *       200:
+ *         description: edited by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Crop'
+ *       500:
+ *         description: Some server error
  */
 
 
 //updating a particular crop
 app.put("/:id",CheckAuth,core.edit_by_id)
-
 /**
  * @swagger
  * /crop:
- * get:
- * discription: edit_by_id
- * responses:
- * 200:
- * description:Success
+ *   delete:
+ *     summary: delete crops
+ *     tags: [Product]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Crop'
+ *     responses:
+ *       200:
+ *         description: deleted by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Crop'
+ *       500:
+ *         description: Some server error
  */
+
+
 
 //deleteing particular crop
 app.delete('/:id',CheckAuth,core.delete_by_id)
@@ -169,3 +316,6 @@ app.use((error,req,res,next)=>{
     })
 })
 app.listen("8000",()=>console.log("crop server is running on 8000"))
+//401-unauthorised
+//500 server down
+//402 register error or mongoose error

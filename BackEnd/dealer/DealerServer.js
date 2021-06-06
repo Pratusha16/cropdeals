@@ -14,6 +14,37 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 
+const swaggerJsdoc=require("swagger-jsdoc");
+const swaggerUi=require("swagger-ui-express");
+//swagger 
+const options = {
+    definition: {
+      openapi: "3.0.0",
+      info: {
+        title: "CROP DEAL CASE STUDY Dealer API with Swagger",
+        version: "0.1.0",
+        description:
+          "This is a simple CRUD API application made with Express and documented with Swagger",
+      },
+      servers: [
+        {
+          url: "http://localhost:7000",
+        },
+      ],
+    },
+    apis: ["DealerServer.js"],
+  };
+ //require("../../BackEnd/crop/CropServer")
+  const specs = swaggerJsdoc(options);
+  app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(specs,{ explorer: true })
+  );
+
+  console.log(specs);
+
+
 //for browsers only
 app.use((req,res,next)=>{
     res.header("Access-Control-Allow-Origin",'*');
@@ -25,6 +56,43 @@ app.use((req,res,next)=>{
     }
     next();
 })
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *      Dealer:
+ *       type: object
+ *       required:
+ *         - name
+ *         - email
+ *         - password
+ *         - role
+ *         
+ *       properties:
+ *         
+ *         name:
+ *           type: string
+ *           description: The dealer name
+ *         email:
+ *           type: string
+ *           description: The dealer name    
+ *         password:
+ *           type: string
+ *           description: password of dealer
+ *         role:
+ *            type:string
+ *            description: role of a person
+ *
+ *       example:
+ *         
+ *         name: pratusha
+ *         email : "pratusha@gmail.com"
+ *         password: "pratusha@6"
+ *         role:"dealer"
+ *        
+ */
+
 
 //checking Authorization in middleware
 const CheckAuth=(req,res,next)=>{
@@ -59,44 +127,57 @@ const { secretKey } = require("./config");
 
 /**
  * @swagger
- * /dealer:
- * get:
- * discription: Get dealers_get_all
- * responses:
- * 200:
- * description:Success
+ * /dealers:
+ *   get:
+ *    discription: Get dealers with check_auth
+ *    parameters:
+ *      - name: 
+ *        description: name
+ *        required: true
+ *        type: String
+ *    responses:
+ *      '200':
+ *       description:Success
+ *   /ping:
+ *     get:
+ *       summary: Checks if the server is running
+ *       security: []   # No security
+ *       responses:
+ *         '200':
+ *           description: Server is up and running
+ *         default:
+ *           description: Something is wrong
  */
+
 
 //getting all delaer data
 app.get("/dealers",CheckAuth,code.dealers_get_all)
 
-/**
- * @swagger
- * /dealer:
- * get:
- * discription: Get dealers_get_id
- * responses:
- * 200:
- * description:Success
- */
 
 // fetch particular dealer details with name
 app.get('/dealers/:id',CheckAuth,code.dealers_get_by_id)
 
 /**
  * @swagger
- * /dealer:
- * post:
- * discription: dealers_register
- * parameters:
- * -name:String
- * email:String
- * password:String
- * subscribed_crops:crop
- * bank_details:bank
- * responses:
- * 200:
- * description:Success
+ * /register:
+ *   post:
+ *     summary: register a new dealer
+ *     tags: [Product]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Dealer'
+ *     responses:
+ *       200:
+ *         description: The DEALER was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Dealer'
+ *       500:
+ *         description: Some server error
  */
 
 //register new dealer
@@ -104,16 +185,39 @@ app.post("/register",code.dealers_register)
 
 /**
  * @swagger
- * /dealer:
- * post:
- * discription: dealers_login
- * parameters:
- * -name:String
- * email:String
- * password:String
- * responses:
- * 200:
- * description:Success
+ * /login:
+ *   post:
+ *    discription: login dealer
+ *    components:
+ *      securitySchemes:
+ *        BearerAuth:
+ *          type: http
+ *          scheme: bearer
+ *    parameters:
+ *      - name: 
+ *        description: name
+ *        required: true
+ *        type: String
+ *      - email: 
+ *        description: email
+ *        required: true
+ *        type: String
+ *      - password: 
+ *        description: password
+ *        required: true
+ *        type: String
+ *    responses:
+ *      '200':
+ *       description:Success
+ *   /ping:
+ *     get:
+ *       summary: Checks if the server is running
+ *       security: []   # No security
+ *       responses:
+ *         '200':
+ *           description: Server is up and running
+ *         default:
+ *           description: Something is wrong
  */
     
 // login to existing dealer user
@@ -121,16 +225,26 @@ app.post("/login",code.dealers_login)
 
 /**
  * @swagger
- * /dealers:
- * put:
- * discription: dealers_edit_by_id
- * parameters:
- * -name:String
- * email:String
- * password:String
- * responses:
- * 200:
- * description:Success
+ * /dealer:
+ *   put:
+ *    discription: Get dealer edit by id
+ *    parameters:
+ *      - name: 
+ *        description: name
+ *        required: true
+ *        type: String
+ *    responses:
+ *      '200':
+ *       description:Success
+ *   /ping:
+ *     get:
+ *       summary: Checks if the server is running
+ *       security: []   # No security
+ *       responses:
+ *         '200':
+ *           description: Server is up and running
+ *         default:
+ *           description: Something is wrong
  */
 
 //editing a particular dealer details
@@ -139,15 +253,25 @@ app.put("/dealers/:id",CheckAuth,code.dealers_edit_by_id)
 /**
  * @swagger
  * /dealers:
- * delete:
- * discription: dealers_delete_by_id
- * parameters:
- * -name:String
- * email:String
- * password:String
- * responses:
- * 200:
- * description:Success
+ *   put:
+ *    discription: Get dealers deleted by id
+ *    parameters:
+ *      - name: 
+ *        description: name
+ *        required: true
+ *        type: String
+ *    responses:
+ *      '200':
+ *       description:Success
+ *   /ping:
+ *     get:
+ *       summary: Checks if the server is running
+ *       security: []   # No security
+ *       responses:
+ *         '200':
+ *           description: Server is up and running
+ *         default:
+ *           description: Something is wrong
  */
 
 //deleteing particular dealer
