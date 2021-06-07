@@ -24,7 +24,7 @@ const swaggerUi=require("swagger-ui-express");
     definition: {
       openapi: "3.0.0",
       info: {
-        title: "CROP DEAL CASE STUDY Admin API with Swagger",
+        title: "CASE STUDY Admin API with Swagger",
         version: "0.1.0",
         description:
           "This is a simple CRUD API application made with Express and documented with Swagger",
@@ -114,7 +114,7 @@ app.use((req,res,next)=>{
 })
 
 //connecting to database
-const dbURI="mongodb+srv://admin:123@mongodbpractise.bjozc.mongodb.net/CropdealADMIN?retryWrites=true&w=majority";
+const dbURI="mongodb+srv://Pratusha:Pratusha1998@cluster0.38wpw.mongodb.net/CropdealADMIN?retryWrites=true&w=majority";
 mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true})
 .then(()=>{
     console.log("admin database connected")

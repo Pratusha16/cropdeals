@@ -21,19 +21,43 @@ const app=express();
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json());
 app.use(morgan("dev"));
-// axios.get(cropurl)
-// .then((response)=>{
-//     for(let crop of response.data){
-//         console.log(crop.crop_name);
-//     }
-// }).catch(console.error)
 
-// axios.get(adminurl)
-// .then((response)=>{
-//     for(let data of response.data){
-//         console.log(data);
-//     }
-// }).catch(console.error)
+// app.js
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+
+const swaggerDefinition = {
+    openapi: '3.0.0',
+    info: {
+      title: 'Express API for JSONPlaceholder',
+      version: '1.0.0',
+      description:
+        'This is a REST API application made with Express. It retrieves data from JSONPlaceholder.',
+      license: {
+        name: 'Licensed Under MIT',
+        url: 'https://spdx.org/licenses/MIT.html',
+      },
+      contact: {
+        name: 'JSONPlaceholder',
+        url: 'https://jsonplaceholder.typicode.com',
+      },
+    },
+    servers: [
+      {
+        url: 'http://localhost:5000',
+        description: 'Development server',
+      },
+    ],
+  };
+
+const options = {
+  swaggerDefinition,
+  // Paths to files containing OpenAPI definitions
+  apis: ['./FarmerServer/*.js'],
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 //for browsers only setting headers
 app.use((req,res,next)=>{
