@@ -53,7 +53,7 @@ const swaggerDefinition = {
 const options = {
   swaggerDefinition,
   // Paths to files containing OpenAPI definitions
-  apis: ['./FarmerServer/*.js'],
+  apis: ['FarmerServer.js'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
@@ -100,29 +100,15 @@ mongoose.connect(dbURI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIn
 
 /**
  * @swagger
- * /farmer:
- * get:
- * discription: Get farmers_get_all
- * responses:
- * 200:
- * description:Success
- */
+ * /farmers:
+ *   get:
+ *     summary: Retrieve a list of JSONPlaceholder farmers
+ *     description: Retrieve a list of farmers from JSONPlaceholder. Can be used to populate a list of fake users when prototyping or testing an API.
+*/
 //getting all data
 app.get("/farmers",CheckAuth,code.farmers_get_all)
 
-/**
- * @swagger
- * /farmers:
- * get:
- * discription: farmers_get_by_id
- * parameters:
- * -name:String
- * email:String
- * password:String
- * responses:
- * 200:
- * description:Success
- */
+
 
 // fetch particular farmer details with name
 app.get('/farmers/:id',CheckAuth,code.farmers_get_by_id);
