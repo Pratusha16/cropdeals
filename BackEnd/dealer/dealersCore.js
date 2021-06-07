@@ -94,7 +94,8 @@ exports.dealers_login=(req,res,next)=>{
                 })
                 return res.status(200).json({
                     message:"Auth Successful!",
-                    token:token
+                    token:token,
+                    user:dealer[0]
                 })
             }
             res.status(401).json({

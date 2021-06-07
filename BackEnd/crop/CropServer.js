@@ -24,7 +24,7 @@ const options = {
     definition: {
       openapi: "3.0.0",
       info: {
-        title: "CROP DEAL CASE STUDY Crop API with Swagger",
+        title: "CASE STUDY Crop API with Swagger",
         version: "0.1.0",
         description:
           "This is a simple CRUD API application made with Express and documented with Swagger",
@@ -82,6 +82,7 @@ app.use((req,res,next)=>{
  *      Crop:
  *       type: object
  *       required:
+ *         
  *         - crop_name
  *         - crop_type
  *         - crop_quantity
@@ -90,6 +91,9 @@ app.use((req,res,next)=>{
  *         - crop_img
  *         - uploaded_by
  *       properties:
+ *         id:
+ *            type: string
+ *            description:the auto generated id of the uploaded crop by farmer
  *         crop_type:
  *           type: string
  *           description: The crop type
@@ -113,12 +117,13 @@ app.use((req,res,next)=>{
  *           description: farmer name
  *
  *       example:
+ *         - id: "60b9f1417a4cc92614e5f5ee"
  *         - crop_name:"onion"
  *         - crop_type:"vegetable"
  *         - crop_quantity:100
  *         - crop_price:20
  *         - location:object
- *         - crop_img:"http://image"
+ *         - crop_img:"https://image.made-in-china.com/2f0j00COktcEjzvYrQ/Fresh-Onion-Chinese-Yellow-Onion-Jinan-Onion.jpg"
  *         - uploaded_by :"pradeep"                     
  */
 
@@ -194,11 +199,12 @@ app.get("/",core.crop_get_all)
 
 /**
  * @swagger
- * /crop:
+ * /crop/{id}:
  *   get:
  *    discription: Get crop by id
  *    parameters:
- *      - crop_name: 
+ *      - name: id
+ *        schema:
  *        description: name
  *        required: true
  *        type: String
@@ -219,27 +225,29 @@ app.get("/",core.crop_get_all)
 // fetch particular crop details with name
 app.get('/:id',core.crop_get_by_id)
 
+
 /**
  * @swagger
  * /crop:
  *   post:
- *     summary: upload crop
- *     tags: [Product]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Crop'
- *     responses:
- *       200:
- *         description: crop are uploaded successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Crop'
- *       500:
- *         description: Some server error
+ *    discription: Get crop uploaded by 
+ *    parameters:
+ *      - crop_name: 
+ *        description: name
+ *        required: true
+ *        type: String
+ *    responses:
+ *      '200':
+ *       description:Success
+ *   /ping:
+ *     get:
+ *       summary: Checks if the server is running
+ *       security: []   # No security
+ *       responses:
+ *         '200':
+ *           description: Server is up and running
+ *         default:
+ *           description: Something is wrong
  */
 
 //adding crop
@@ -248,25 +256,27 @@ app.get('/:id',core.crop_get_by_id)
 
  /**
  * @swagger
- * /crop:
+ * /crop/{id}:
  *   put:
- *     summary: update crops
- *     tags: [Product]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Crop'
- *     responses:
- *       200:
- *         description: edited by id
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Crop'
- *       500:
- *         description: Some server error
+ *    discription: Get crop edited by id
+ *    parameters:
+ *      - name: id
+ *        schema:
+ *        description: name
+ *        required: true
+ *        type: String
+ *    responses:
+ *      '200':
+ *       description:Success
+ *   /ping:
+ *     get:
+ *       summary: Checks if the server is running
+ *       security: []   # No security
+ *       responses:
+ *         '200':
+ *           description: Server is up and running
+ *         default:
+ *           description: Something is wrong
  */
 
 
@@ -274,27 +284,28 @@ app.get('/:id',core.crop_get_by_id)
 app.put("/:id",CheckAuth,core.edit_by_id)
 /**
  * @swagger
- * /crop:
+ * /crop/{id}:
  *   delete:
- *     summary: delete crops
- *     tags: [Product]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Crop'
- *     responses:
- *       200:
- *         description: deleted by id
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Crop'
- *       500:
- *         description: Some server error
+ *    discription: Get crop deleted by id
+ *    parameters:
+ *      - name: id
+ *        schema:
+ *        description: name
+ *        required: true
+ *        type: String
+ *    responses:
+ *      '200':
+ *       description:Success
+ *   /ping:
+ *     get:
+ *       summary: Checks if the server is running
+ *       security: []   # No security
+ *       responses:
+ *         '200':
+ *           description: Server is up and running
+ *         default:
+ *           description: Something is wrong
  */
-
 
 
 //deleteing particular crop

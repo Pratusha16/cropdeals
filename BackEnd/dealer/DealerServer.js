@@ -21,7 +21,7 @@ const options = {
     definition: {
       openapi: "3.0.0",
       info: {
-        title: "CROP DEAL CASE STUDY Dealer API with Swagger",
+        title: "CASE STUDY Dealer API with Swagger",
         version: "0.1.0",
         description:
           "This is a simple CRUD API application made with Express and documented with Swagger",
