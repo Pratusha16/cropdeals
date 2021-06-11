@@ -1,7 +1,6 @@
 {
   "name": "dealer",
   "version": "1.0.0",
-  "description": "",
   "main": "DealerSchema.js",
   "dependencies": {
     "axios": "^0.21.1",
@@ -18,10 +17,19 @@
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "jest": "^27.0.4",
+    "mocha": "^9.0.0",
+    "nyc": "^15.1.0",
+    "supertest": "^6.1.3"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha || --timeout 10000 true --recursive --exit",
+    "start": "nodemon FarmerServer.js"
+    
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": ""
 }
