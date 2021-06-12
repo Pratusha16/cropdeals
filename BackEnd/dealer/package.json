@@ -26,7 +26,7 @@
   },
   "scripts": {
     "test": "mocha || --timeout 10000 true --recursive --exit",
-    "start": "nodemon FarmerServer.js"
+    "start": "nodemon DealerServer.js"
     
   },
   "author": "",

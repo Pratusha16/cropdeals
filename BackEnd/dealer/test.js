@@ -251,7 +251,7 @@ describe("POST /register ",()=>{
 
 //only login
 describe("POST/login",()=>{
-    before((done)=>{
+    /*before((done)=>{
         conn.connect()
         .then(()=> done())
         .catch((err)=>done(err));
@@ -260,7 +260,7 @@ describe("POST/login",()=>{
         conn.close()
         .then(()=>done())
         .catch((err)=>done(err));
-    })
+    })*/
 
     describe("given user name which does not exists ",()=>{
        it("should give 401 status code",(done)=>{
@@ -344,7 +344,7 @@ describe("POST/login",()=>{
 })
 
 describe("GET /dealer to get all admin details",()=>{
-    before((done)=>{
+    /*before((done)=>{
         conn.connect()
         .then(()=> done())
         .catch((err)=>done(err));
@@ -353,7 +353,7 @@ describe("GET /dealer to get all admin details",()=>{
         conn.close()
         .then(()=>done())
         .catch((err)=>done(err));
-    })
+    })*/
     it("get admin details without auth shd return error with status code",(done)=>{
         request(app)
         .get("/dealers")
