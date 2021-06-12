@@ -66,7 +66,7 @@ describe("new crop creation and deletion",()=>{
                 crop_name:"RedCherry",
                 crop_type:"fruit",
                 crop_quantity:100,
-                uploaded_by:"chaithra",
+                uploaded_by:"pratusha",
                 crop_price:1231,
                 location:{
                     Addressline1:"bangalore",
@@ -100,7 +100,7 @@ describe("new crop creation and deletion",()=>{
                 crop_name:"blueCherry",
                 crop_type:"fruit",
                 crop_quantity:100,
-                uploaded_by:"chaithra",
+                uploaded_by:"pratusha",
                 crop_price:1231,
                 location:{
                     Addressline1:"bangalore",
@@ -133,7 +133,7 @@ describe("new crop creation and deletion",()=>{
                     crop_name:"apple",
                     crop_type:"fruit",
                     crop_quantity:100,
-                    uploaded_by:"chaithra",
+                    uploaded_by:"pratusha",
                     crop_price:1231,
                     location:{
                         Addressline1:"bangalore",

@@ -23,9 +23,9 @@ describe("POST /register ",()=>{
         it("exiting user should give 409 status code",(done)=>{
             const response =request(app).post("/register")
             .send({
-                name:"Chaithra KS",
-                email:"kschaithra21@gmail.com",
-                password:"Chai@210396",
+                name:"pratusha",
+                email:"pratusha@gmail.com",
+                password:"pratusha@6",
                 role:"DEALER",
                 contact:1234567891,
                 gender:"FEMALE"
@@ -42,9 +42,9 @@ describe("POST /register ",()=>{
         it("should give 409 status code for missing role value",(done)=>{
             const response =request(app).post("/register")
             .send({
-                name:"Chaithra KS",
-                email:"kschaithra21@gmail.com",
-                password:"Chai@210396",
+                name:"pratusha",
+                email:"pratusha@gmail.com",
+                password:"pratusha@6",
                 contact:1234567891,
                 gender:"FEMALE"
             }).then(response=>{
@@ -60,8 +60,8 @@ describe("POST /register ",()=>{
         it("should give 409 status code for missing password value",(done)=>{
             const response =request(app).post("/register")
             .send({
-                name:"Chaithra KS",
-                email:"kschaithra21@gmail.com",
+                name:"pratusha",
+                email:"pratusha@gmail.com",
                 role:"DEALER",
                 contact:1234567891,
                 gender:"FEMALE"
@@ -78,9 +78,9 @@ describe("POST /register ",()=>{
         it("should give 402 status code for missing email value",(done)=>{
             const response =request(app).post("/register")
             .send({
-                name:"Chaithra KS",
+                name:"pratusha",
                 role:"DEALER",
-                password:"Chai@210396",
+                password:"pratusha@6",
                 contact:1234567891,
                 gender:"FEMALE"
             }).then(response=>{
@@ -96,10 +96,10 @@ describe("POST /register ",()=>{
         it("should give 402 status code for invalid email value",(done)=>{
             const response =request(app).post("/register")
             .send({
-                name:"Chaithra KS",
+                name:"pratusha",
                 role:"DEALER",
                 email:"email.com",
-                password:"Chai@210396",
+                password:"pratusha@6",
                 contact:1234567891,
                 gender:"FEMALE"
             }).then(response=>{
@@ -117,7 +117,7 @@ describe("POST /register ",()=>{
             .send({
                 email:"Testingabc@123.com",
                 role:"DEALER",
-                password:"Chai@210396",
+                password:"pratusha@6",
                 contact:1234567891,
                 gender:"FEMALE"
             }).then(response=>{
@@ -136,9 +136,9 @@ describe("POST /register ",()=>{
         it("create new user should give 201 status code",(done)=>{
             request(app).post("/register")
             .send({
-                name:"Chaithra",
-                email:"Testabc12@gmail.com",
-                password:"Chai@210396",
+                name:"pratusha h",
+                email:"pratushah@gmail.com",
+                password:"pratushah@6",
                 role:"DEALER",
                 contact:1234567891,
                 gender:"FEMALE"
@@ -156,9 +156,9 @@ describe("POST /register ",()=>{
         it("login to get token of newly created user",done=>{
             request(app).post("/login")
             .send({
-                name:"Chaithra",
-                email:"Testabc12@gmail.com",
-                password:"Chai@210396",
+                name:"pratusha h",
+                email:"pratushah@gmail.com",
+                password:"pratushah@6",
                 role:"DEALER",
             }).then(response=>{
                 //console.log(response.body);
@@ -191,9 +191,9 @@ describe("POST /register ",()=>{
             request(app).put("/dealers/"+this.id)
             .set({"authorization":"Bearer "+this.token})
             .send({
-                name:"Chaitra",
-                email:"Testabc12@gmail.com",
-                password:"Chai@210396",
+                name:"pratusha",
+                email:"pratushah@gmail.com",
+                password:"pratushah@6",
                 role:"ADMIN",
                 contact:1234567891,
                 gender:"FEMALE",
@@ -205,7 +205,7 @@ describe("POST /register ",()=>{
                 bank_details:{
                     bank_name:"abcdBANK",
                     account_number:"123454321",
-                    ifsc_code:"bhlivQBLNCLKdi"
+                    ifsc_code:"abcd1234"
                 }
             }).then(response=>{
                 expect(response.statusCode).to.be.equal(201);
@@ -266,9 +266,9 @@ describe("POST/login",()=>{
        it("should give 401 status code",(done)=>{
             const response = request(app).post("/login")
             .send({
-                name:"chaithra",
-                email:"kschaithra21@gmail.com",
-                password:"Chai"
+                name:"deepu",
+                email:"deepu1@gmail.com",
+                password:"deepu"
             }).then(response=>{
                 expect(response.statusCode).to.be.equal(401);               
                 done()
@@ -284,8 +284,8 @@ describe("POST/login",()=>{
         it("missing password should give 401 status code",(done)=>{
                 const response =request(app).post("/login")
                 .send({
-                    name:"chaithra",
-                    email:"kschaithra21@gmail.com",
+                    name:"pratusha",
+                    email:"pratusha@gmail.com",
                     password:""
                 }).then(response=>{
                     expect(response.statusCode).to.be.equal(401);                
@@ -301,9 +301,9 @@ describe("POST/login",()=>{
             it("should give 401 status code",(done)=>{
                 const response =request(app).post("/login")
                 .send({
-                    name:"chaithra",
-                    email:"kschaithra@21@gmail.com",
-                    password:"Chai@"
+                    name:"pratusha",
+                    email:"pratusha@h@gmail.com",
+                    password:"pratu@"
                 }).then(response=>{
                     expect(response.statusCode).to.be.equal(401);                
                     done()
@@ -322,9 +322,9 @@ describe("POST/login",()=>{
             it("should give 200 status code",(done)=>{
                 const response =request(app).post("/login")
                 .send({
-                    name:"Chaithra KS",
-                    email:"kschaithra21@gmail.com",
-                    password:"Chai@210396",
+                    name:"pratusha",
+                    email:"pratusha@gmail.com",
+                    password:"pratusha@6",
                     role:"ADMIN"
                 }).then(response=>{
                     expect(response.statusCode).to.be.equal(200);
