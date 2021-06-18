@@ -27,7 +27,8 @@
     "swagger-ui-express": "^4.1.6"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon AdminServer.js",
+    "test": "nyc mocha || timeout --100000 true --recursive --exit"
   },
   "author": "",
   "license": "ISC"
