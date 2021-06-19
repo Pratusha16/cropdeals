@@ -1,6 +1,7 @@
 const expect =require ("chai").expect;
 const request =require("supertest");
 const assert =require("chai").assert;
+
 const app=require("./AdminServer");
 const conn=require("./DBconnect");
 let token="";
@@ -8,7 +9,7 @@ let id=""
 
 // register, login, edit, get alladmins, admin by id finally delete user
 describe("POST /register ",()=>{
-    before((done)=>{
+    /*before((done)=>{
         conn.connect()
         .then(()=> done())
         .catch((err)=>done(err));
@@ -17,7 +18,7 @@ describe("POST /register ",()=>{
         conn.close()
         .then(()=>done())
         .catch((err)=>done(err));
-    })
+    })*/
     describe("error status code",()=>{
         it("exiting user should give 409 status code",(done)=>{
             const response =request(app).post("/register")
@@ -240,7 +241,7 @@ describe("POST /register ",()=>{
 
 //only login
 describe("POST/login",()=>{
-    before((done)=>{
+    /*before((done)=>{
         conn.connect()
         .then(()=> done())
         .catch((err)=>done(err));
@@ -249,7 +250,7 @@ describe("POST/login",()=>{
         conn.close()
         .then(()=>done())
         .catch((err)=>done(err));
-    })
+    })*/
 
     describe("given user name which does not exists ",()=>{
        it("should give 401 status code",(done)=>{

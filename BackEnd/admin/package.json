@@ -28,7 +28,7 @@
   },
   "scripts": {
     "start": "nodemon AdminServer.js",
-    "test": "nyc mocha || timeout --100000 true --recursive --exit"
+    "test": "nyc mocha || --timeout 100000 true --recursive --exit"
   },
   "author": "",
   "license": "ISC"
