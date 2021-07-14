@@ -289,6 +289,8 @@ app.use((error,req,res,next)=>{
     })
 })
 
+
+
 adminserver=app.listen("2000",()=>console.log("admin server is running on 2000"));
 
 module.exports=adminserver
